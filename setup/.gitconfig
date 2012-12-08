@@ -1,0 +1,16 @@
+[user]
+    name = Dean Morin
+    email = morin.dean@gmail.com
+[core]
+    editor = vim
+    filemode = false
+    excludesfile = ~/.gitignore
+[merge]
+    tool = vimdiff
+[color]
+    ui = always
+[alias]
+    st = status
+    ci = commit
+[push]
+   default = tracking
