@@ -7,7 +7,7 @@ function create_symlinks()
 {
     for script in "$1"/*; do
         # Ignore the icon file (for OSX folder decoration)
-        if [[ ! -d $script ]] && echo "$script" | grep -q -v "Icon"; then
+        if [[ ! -d $script ]] && echo "$script" | grep -q -v "Icon\|README.txt"; then
             bname=$(basename "$script")
             extensionless="${bname%.*}"
             [[ -L $userbin/$extensionless ]] && rm "$userbin/$extensionless"

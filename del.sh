@@ -26,7 +26,7 @@ while (( "$#" )); do
 
 	elif [ -d "$1" ] || [ -f "$1" ]; then
         full_path=$(pwd)/$1
-        name=$(basename $1)
+        name=$(basename "$1")
         # append a number to the filename if a file with that name already 
         # exists in the .deleted folder
         while [ -d ~/.deleted/"$name" ] || [ -f ~/.deleted/"$name" ]; do

@@ -6,7 +6,7 @@ if [ "$1" == "-l" ]; then
     echo 'Starting server'
     while [ 1 ]; do
         nc -l $port
-        pid=$(ps aux | grep -v grep | grep uTorrent | awk '{print $2}')
+        pid=$(ps aux | grep -v grep | grep Transmission | awk '{print $2}')
         kill $pid &>/dev/null
     done
 fi

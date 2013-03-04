@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+"""Wraps and indents long lines in XML files.
+
+This takes your terminal size into account, so you must rerun this script if
+you change its size.
+"""
 import os
 import sys
 
