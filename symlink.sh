@@ -1,27 +1,28 @@
 #!/bin/bash
-
-dropbox=$HOME/Dropbox
+script_dir="$(cd "$(dirname "$0")" && pwd)"
 userbin=$HOME/bin
 
-function create_symlinks()
-{
+
+create_symlinks() {
     for script in "$1"/*; do
         # Ignore the icon file (for OSX folder decoration)
         if [[ ! -d $script ]] && echo "$script" | grep -q -v "Icon\|README.txt"; then
             bname=$(basename "$script")
             extensionless="${bname%.*}"
-            [[ -L $userbin/$extensionless ]] && rm "$userbin/$extensionless"
-            ln -s $script $userbin/$extensionless
+            symlink=$userbin/$extensionless
+            { [[ -L $symlink ]] && rm "$symlink"; } || echo $extensionless
+            ln -s $script $symlink
         fi
     done
 }
 
+
 [[ ! -d $userbin ]] && mkdir $userbin
 
 echo "> Creating script symlinks"
-create_symlinks "$dropbox/scripts"
+create_symlinks "$script_dir"
 
 if [[ $1 = "-w" ]] || [[ $1 = "--work" ]]; then
     echo "> Creating work script symlinks"
-    create_symlinks "$dropbox/scripts/work_scripts"
+    create_symlinks "$script_dir/work_scripts"
 fi

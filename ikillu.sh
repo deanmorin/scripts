@@ -1,12 +1,13 @@
-#! /bin/bash
+#!/usr/bin/env bash
 port=25252
+program=Transmission
 
 if [ "$1" == "-l" ]; then
     # running as a server; listen for the kill command
     echo 'Starting server'
     while [ 1 ]; do
         nc -l $port
-        pid=$(ps aux | grep -v grep | grep Transmission | awk '{print $2}')
+        pid=$(ps aux | grep -v grep | grep "$program" | awk '{print $2}')
         kill $pid &>/dev/null
     done
 fi

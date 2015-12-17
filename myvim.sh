@@ -13,7 +13,7 @@ function update_plugin(){
     git pull origin master
 }
 
-echo "> Updating vim configuration"
+echo "> Syncing vim configuration"
 
 if [ $OSTYPE = "msys" ]; then
     # Windows
@@ -50,6 +50,10 @@ if [ ! -f $DIR/README ]; then
     echo "source $SOURCE_DIR/.vimrc" >> ~/$VIMRC
     mkdir $DIR/undodir
 
+    cd $DIR
+    git submodule init
+    git submodule update
+
 else
     # git repository exists, need push changes to remote
     cd $DIR
@@ -69,15 +73,12 @@ if [ "$1" == "-u" -o "$1" == "--update" ] && [ $OSTYPE != "msys" ]; then
     if [ $? -ne 127 ]; then
         curl 'www.vim.org/scripts/download_script.php?src_id=16224' > $DIR/autoload/pathogen.vim
     fi
-    update_plugin YankRing.vim
-    update_plugin a.vim
-    #update_plugin greplace.vim
-    #update_plugin gundo.vim
-    #update_plugin nerdcommenter
-    #update_plugin nerdtree
-    update_plugin syntastic
-    update_plugin tagbar
-    update_plugin vim-repeat
-    update_plugin vim-speeddating
-    update_plugin vim-surround
+    git submodule update
+fi
+
+# intialize submodules if option set (avoid on Windows)
+if [ "$1" == "-i" -o "$1" == "--init" ] && [ $OSTYPE != "msys" ]; then
+    git submodule update --init
+    cd ~/.vim/bundle/jedi-vim
+    git submodule update --init
 fi
