@@ -1,0 +1,97 @@
+#!/usr/bin/env python
+import sys
+from decimal import Decimal
+
+MM_IN_INCH = Decimal(25.4)
+INCHES_IN_FEET = 12
+
+
+def inch_fractions(n):
+    if n == Decimal(0 / 16):
+        return None
+    elif n == Decimal(1 / 16):
+        return '¹⁄₁₆'
+    elif n == Decimal(2 / 16):
+        return '¹⁄₈'
+    elif n == Decimal(3 / 16):
+        return '³⁄₁₆'
+    elif n == Decimal(4 / 16):
+        return '¹⁄₄'
+    elif n == Decimal(5 / 16):
+        return '⁵⁄₁₆'
+    elif n == Decimal(6 / 16):
+        return '³⁄₈'
+    elif n == Decimal(7 / 16):
+        return '⁷⁄₁₆'
+    elif n == Decimal(8 / 16):
+        return '¹⁄₂'
+    elif n == Decimal(9 / 16):
+        return '⁹⁄₁₆'
+    elif n == Decimal(10 / 16):
+        return '⁵⁄₈'
+    elif n == Decimal(11 / 16):
+        return '¹¹⁄₁₆'
+    elif n == Decimal(12 / 16):
+        return '³⁄₄'
+    elif n == Decimal(13 / 16):
+        return '¹³⁄₁₆'
+    elif n == Decimal(14 / 16):
+        return '⁷⁄₈'
+    elif n == Decimal(15 / 16):
+        return '¹⁵⁄₁₆'
+
+
+def sixteenth(n):
+    sixteenths = [Decimal(x / 16) for x in range(0, 17)]
+    closest = min(sixteenths, key=lambda x: abs(x - n))
+    return inch_fractions(closest)
+
+
+def inches(i):
+    return (int(i), sixteenth(i % 1))
+
+
+def feet(f):
+    return inches(f * INCHES_IN_FEET)
+
+
+def millimeters(mm):
+    return inches(mm / MM_IN_INCH)
+
+
+def meters(m):
+    return millimeters(m * 1000)
+
+
+# def decimal_inches(integer, fractional):
+#     return f
+
+
+
+if __name__ == '__main__':
+    action = sys.argv[1]
+    input_value = Decimal(sys.argv[2])
+
+    if action == 'mm':
+        f = 'millimeters'
+    elif action == 'm':
+        f = 'meters'
+    elif action == 'i':
+        f = 'inches'
+    elif action == 'f':
+        f = 'feet'
+    elif action == 'di':
+        f = 'decimal_inches'
+
+    if f in {'millimeters', 'meters', 'inches', 'feet'}:
+        integer, fractional = locals()[f](input_value)
+
+        if fractional:
+            fractional_str = f' {fractional}'
+        else:
+            fractional_str = ''
+        print(f'{integer}{fractional_str}"')
+        print(f'{int(integer / INCHES_IN_FEET)}\' {int(integer % INCHES_IN_FEET)}{fractional_str}"')
+
+    if f in {'decimal_inches'}:
+        print(f'{decimal_inches(input_value)}')

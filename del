@@ -40,13 +40,8 @@ delete_files() {
 }
 
 
-if [ ! -d ~/.deleted ]; then
-    mkdir ~/.deleted
-fi
-
-if [ ! -f ~/.deleted/.log ]; then
-    touch ~/.deleted/.log
-fi
+[[ ! -d ~/.deleted ]] && mkdir ~/.deleted
+[[ ! -f ~/.deleted/.log ]] && touch ~/.deleted/.log
 
 if [ "$1" == "-q" ]; then
     quiet=yes

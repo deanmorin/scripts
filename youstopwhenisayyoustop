@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $# -lt 1 ]]; then
-    echo "usage: $(basename $0) command [sleep_time]"
+    echo "usage: $(basename "$0") command [sleep_time]"
     exit 1
 fi
 

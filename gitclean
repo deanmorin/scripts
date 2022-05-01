@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+main=main
+git branch | grep master && main=master
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [[ $branch = $main ]]; then
+    echo "You're on $main, you dingus"
+    exit 1
+fi
+
+if git status -s | grep -v '??' >/dev/null; then
+    echo "You have uncommited changes"
+    exit 1
+fi
+
+git checkout $main
+git pull
+git branch -d $branch
+git fetch --all --prune

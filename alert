@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+{ [[ -n $1 ]] && msg="$1"; } || msg='Task finished in terminal'
+terminal-notifier -title 'Job Done' -message "$msg"

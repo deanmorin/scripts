@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+if [[ -z $1 ]]; then
+    echo "usage: $(basename "$0") <port_to_check>"
+    exit 1
+fi
+
+port=$1
+pid=$(lsof -n -i 4TCP:${port} | grep LISTEN | awk '{ print $2 }')
+name=$(lsof -n -i 4TCP:${port} | grep LISTEN | awk '{ print $9 }')
+
+if [[ -z $pid ]]; then
+    echo "Nothing running on port $port"
+    exit 1
+fi
+cmd_with_args=$( ps -fp $pid | awk 'NR>'1 | tr -s ' ' | cut -d ' ' -f 8- )
+echo "$name"
+echo "$cmd_with_args" | gsed -r "s/\s(-+)/\n\t\1/g"

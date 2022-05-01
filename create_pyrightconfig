@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+current_dir="$(basename "$(pwd)")"
+
+if poetry env info -p &>/dev/null
+then
+    venv="$(poetry env info -p)"
+elif ls ~/.virtualenvs | grep "$current_dir" &>/dev/null
+then
+    venv="~/.virtualenvs/${current_dir}"
+else
+    echo "ERROR: Couldn't find venv"
+    exit 1
+fi
+
+if [[ -f pyrightconfig.json ]]
+then
+    echo "ERROR: pyrightconfig.json already exists"
+    exit 1
+fi
+
+touch pyrightconfig.json
+echo '{'                                       >> pyrightconfig.json
+echo '  "venvPath": "'"$(dirname "$venv")"'",' >> pyrightconfig.json
+echo '  "venv": "'"$(basename "$venv")"'"'     >> pyrightconfig.json
+echo '}'                                       >> pyrightconfig.json

@@ -6,8 +6,6 @@ echo -n "> Empty the .deleted folder? (y/n) "
 read choice
 if [[ $choice = y ]]; then
     [[ -d ~/.deleted ]] || exit
-    cd ~/.deleted
-    rm -rf "$(ls -A ~/.deleted/)"
-    cd - &> /dev/null
-    echo "> '.deleted' has been cleared."
+    # ls -A ~/.deleted/ | xargs rm -rf
+    # echo "> '.deleted' has been cleared."
 fi
